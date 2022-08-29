@@ -1,4 +1,7 @@
-﻿using NUnit.Framework;
+﻿using API_POC.DTO;
+using API_POC.Utility;
+using Newtonsoft.Json;
+using NUnit.Framework;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -14,19 +17,21 @@ namespace API_POC.Tests
         private RestClient _client;
         private RestRequest _request;
         private RestResponse _response;
+        private Registry? _dTORegistry;
 
         [Test]
         public void VerifytheNameoftheCategory()
         {
-            var options = new RestClientOptions("https://api.tmsandbox.co.nz")
-            {
-                ThrowOnAnyError = true,
-                MaxTimeout = 1000
-            };
-            _client = new RestClient(options);
-            _request = new RestRequest("/v1/Categories/6327/Details.json?catalogue=fals",Method.Get);
-            _response = _client.Execute(_request);
+            _client = Helper.SetClient();
+            // arrange
+            _request = Helper.CreateGetRequest("/v1/Categories/6327/Details.json?catalogue=false");
+            // act
+            _response = Helper.CreateGetResponse(_client, _request);
+            _dTORegistry = JsonConvert.DeserializeObject<Registry>(_response.Content);
+            // Assert
             Assert.That(_response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(_dTORegistry.Name, Is.EqualTo("Carbon credits"));
+            Assert.That(_dTORegistry.CanRelist, Is.EqualTo(true));
         }
     }
 }
