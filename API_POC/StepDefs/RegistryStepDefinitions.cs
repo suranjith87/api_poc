@@ -20,7 +20,7 @@ namespace API_POC
         {
             // arrange
             _client = Helper.SetClient();
-            var request = Helper.CreateGetRequest("/v1/Categories/6327/Details.json?catalogue=false");
+            var request = Helper.CreateGetRequest(TestContext.Parameters["endPoint"]);
             // act
             _response = Helper.CreateGetResponse(_client, request);
         }

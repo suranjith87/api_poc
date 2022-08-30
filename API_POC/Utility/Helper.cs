@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using NUnit.Framework;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace API_POC.Utility
     {
         public static RestClient _restClient;
         public static RestRequest _restRequest;
-        public static string _baseUrl = "https://api.tmsandbox.co.nz";
+        public static string _baseUrl = TestContext.Parameters["BaseURL"];
 
         public static RestClient SetClient()
         {

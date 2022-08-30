@@ -24,9 +24,9 @@ namespace API_POC.Tests
         {
             _client = Helper.SetClient();
             // arrange
-            var request = Helper.CreateGetRequest("/v1/Categories/6327/Details.json?catalogue=false");
+            _request = Helper.CreateGetRequest(TestContext.Parameters["endPoint"]);
             // act
-            _response = Helper.CreateGetResponse(_client, request);
+            _response = Helper.CreateGetResponse(_client, _request);
             _dTORegistry = JsonConvert.DeserializeObject<Registry>(_response.Content);
         }
 
