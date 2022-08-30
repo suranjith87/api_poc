@@ -1,4 +1,7 @@
-﻿using NUnit.Framework;
+﻿using API_POC.DTO;
+using API_POC.Utility;
+using Newtonsoft.Json;
+using NUnit.Framework;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -14,19 +17,66 @@ namespace API_POC.Tests
         private RestClient _client;
         private RestRequest _request;
         private RestResponse _response;
+        private Registry? _dTORegistry;
 
-        [Test]
-        public void VerifytheNameoftheCategory()
+        [SetUp]
+        public void Setup()
         {
-            var options = new RestClientOptions("https://api.tmsandbox.co.nz")
+            _client = Helper.SetClient();
+            // arrange
+            _request = Helper.CreateGetRequest(TestContext.Parameters["endPoint"]);
+            // act
+            _response = Helper.CreateGetResponse(_client, _request);
+            _dTORegistry = JsonConvert.DeserializeObject<Registry>(_response.Content);
+        }
+
+        [TestCase("Carbon credits", HttpStatusCode.OK, TestName = "Verify the name of the category")]
+        [Test]
+        public void VerifytheNameoftheCategory(string name, HttpStatusCode expectedHttpStatusCode)
+        {   
+            // assert
+            Assert.That(_response.StatusCode, Is.EqualTo(expectedHttpStatusCode));
+            Assert.That(_dTORegistry.Name, Is.EqualTo(name));
+        }
+
+        [TestCase(true, HttpStatusCode.OK, TestName = "Verify category can re-list")]
+        public void VerifyCategoryCanRelist(bool status, HttpStatusCode expectedHttpStatusCode)
+        {
+            // assert
+            Assert.That(_response.StatusCode, Is.EqualTo(expectedHttpStatusCode));
+            Assert.That(_dTORegistry.CanRelist, Is.EqualTo(status));
+        }
+
+        [TestCase("Gallery", "Good position in category", HttpStatusCode.OK, TestName = "Verify the promotion name with description")]
+        public void VerifyRegistryInfo(string name, string description, HttpStatusCode expectedHttpStatusCode)
+        {
+            // assert
+            Assert.That(_response.StatusCode, Is.EqualTo(expectedHttpStatusCode));
+
+            Assert.Multiple(() =>
             {
-                ThrowOnAnyError = true,
-                MaxTimeout = 1000
-            };
-            _client = new RestClient(options);
-            _request = new RestRequest("/v1/Categories/6327/Details.json?catalogue=fals",Method.Get);
-            _response = _client.Execute(_request);
-            Assert.That(_response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+                var status = false;
+                for (int i = 0; i < _dTORegistry.Promotions.Count; i++)
+                {
+                    if (name.Equals(_dTORegistry.Promotions[i].Name))
+                    {
+                        Assert.That(_dTORegistry.Promotions[i].Name, Is.EqualTo(name));
+                        Assert.That(_dTORegistry.Promotions[i].Description, Is.EqualTo(description), "Description does not match with the given content");
+                        status = true;
+                        break;
+                    }
+                }
+                if (!status)
+                {
+                    Assert.Fail("Category not listed in the registry");
+                }
+            });
+        }
+
+        [TearDown]
+        public void Close()
+        {
+            Console.WriteLine("Verification points completed!");
         }
     }
 }
