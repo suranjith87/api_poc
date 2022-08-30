@@ -3,18 +3,19 @@
 ### Framework for testing API Services with RestSharp and C# HTTP Client
 
 ## About The Project
-This project for build for test the API testing using RestSharp with C#.Net language intergration with SpecFlow. The test cases are being read from the specFlow feature file.
+This project for built to test the API testing using RestSharp with C#.Net language integration with SpecFlow. The test cases are being read from the specFlow feature file. When you open the Visual Studio, You can see two test suites. One is SpecFlow and another one is the Unit test method.
 
 ### Built With
 The Framework built with below main packages
 * [SpecFlow](https://specflow.org/)
 * [RestSharp](http://restsharp.org)
 * [NUnit](https://nunit.org)
+* [Extent Report](https://www.extentreports.com/)
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is instructions on setting up your project locally.
+These instructions are on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
@@ -28,6 +29,7 @@ To get a local copy up and running follow these simple example steps.
 1. RestSharp
 2. SpecFlow
 3. Nunit
+4. Extent Report
 
 
 ### Build Solution
@@ -38,7 +40,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Run Tests
 
-### Run Tests with Visual Studio, go through the following instructons
+### Run Tests with Visual Studio, go through the following instructions
 - Go to the Test tab in the visual studio menu 
 - Select the "Configure Run Settings"
 
@@ -53,6 +55,17 @@ To get a local copy up and running follow these simple example steps.
 
 ### Run Tests with Command Prompt/Windows PowerShell
 * Open Folder in File Explorer: ..\API_POC\API_POC\bin\Debug\net6.0
-* Open Command Prompt/Windows PowerShell
+* Open Command Prompt/Windows PowerShell and navigates to the above bin folder after you build the solution
+![image](https://user-images.githubusercontent.com/14870031/187425800-1a8f4d68-f67c-47ec-a145-474e2c217875.png)
+
 * Run "dotnet vstest API_POC.dll /Settings:AutomatedUITest.runsettings /Logger:trx"
  ![image](https://user-images.githubusercontent.com/14870031/187357162-b5b961fb-7457-4593-ac68-f9b83612ac95.png)
+ 
+ ### Reporting 
+ ## Extent Report
+ Integrate extent report in BDD style using Specflow. The report can be found in the following file path.
+ * Open Folder in File Explorer and navigates to the bin folder   ..\API_POC\API_POC\bin\Debug\net6.0
+ * Go to the ExtentReport folder and click on the index.html
+ 
+ ![image](https://user-images.githubusercontent.com/14870031/187422957-2e669638-fb3d-4920-ad62-c95cf29f1974.png)
+
