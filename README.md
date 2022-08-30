@@ -29,10 +29,16 @@ To get a local copy up and running follow these simple example steps.
 2. SpecFlow
 3. Nunit
 
-<!-- USAGE EXAMPLES -->
-## Usage
 
-To run the testing via Visual Studio, go through the following instructons
+### Build Solution
+* Build => Build Solution
+
+![image](https://user-images.githubusercontent.com/14870031/187355007-863e5a6f-8bb3-4337-a872-ce536d50ce81.png)
+
+
+### Run Tests
+
+### Run Tests with Visual Studio, go through the following instructons
 - Go to the Test tab in the visual studio menu 
 - Select the "Configure Run Settings"
 
@@ -42,5 +48,11 @@ To run the testing via Visual Studio, go through the following instructons
 - Select the run settings file from the folder 
 - And navigates to the run settings file attached in the solution https://github.com/suranjith87/api_poc/blob/master/API_POC/AutomatedUITest.runsettings
 - Once you select the file Click on the Run All button on Test Explorer
-- ![image](https://user-images.githubusercontent.com/14870031/187343873-91ccd3d6-6f38-426d-aed9-6399b5385d10.png)
 
+![image](https://user-images.githubusercontent.com/14870031/187343873-91ccd3d6-6f38-426d-aed9-6399b5385d10.png)
+
+### Run Tests with Command Prompt/Windows PowerShell
+* Open Folder in File Explorer: ..\API_POC\API_POC\bin\Debug\net6.0
+* Open Command Prompt/Windows PowerShell
+* Run "dotnet vstest API_POC.dll /Settings:AutomatedUITest.runsettings /Logger:trx"
+ ![image](https://user-images.githubusercontent.com/14870031/187357162-b5b961fb-7457-4593-ac68-f9b83612ac95.png)
